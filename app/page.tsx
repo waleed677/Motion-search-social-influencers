@@ -6,6 +6,7 @@ import {
   type ReactElement,
   type SVGProps,
 } from "react";
+import ResultsSection from "@/components/ResultsSection";
 
 const logoAltText = "MotionSearch logo";
 
@@ -192,6 +193,7 @@ const Home = () => {
             {renderSearchForm(audienceLabel)}
           </div>
         </section>
+        <ResultsSection platform={activePlatform} />
       </main>
     </div>
   );
