@@ -17,6 +17,12 @@ type PlatformTab = {
   Icon: (props: SVGProps<SVGSVGElement>) => ReactElement;
 };
 
+const platformAudienceLabel: Record<PlatformId, "Subscribers" | "Followers"> = {
+  youtube: "Subscribers",
+  tiktok: "Followers",
+  instagram: "Followers",
+};
+
 const YoutubeIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 24 24"
@@ -61,6 +67,7 @@ const platformTabs: PlatformTab[] = [
 
 const Home = () => {
   const [activePlatform, setActivePlatform] = useState<PlatformId>("youtube");
+  const audienceLabel = platformAudienceLabel[activePlatform];
 
   const handleTabSelect = (platformId: PlatformId) => {
     if (platformId === activePlatform) {
@@ -79,6 +86,41 @@ const Home = () => {
     event.preventDefault();
     handleTabSelect(platformId);
   };
+
+  const renderSearchForm = (label: string) => (
+    <form className="flex flex-col gap-6">
+      <label className="flex flex-col gap-2 text-white/80">
+        <span className="text-sm font-semibold">Search with Keywords</span>
+        <input
+          type="text"
+          placeholder="Find creators by content—one niche at a time (e.g. 'Plant-based recipes')"
+          className="w-full rounded-2xl border border-white/15 bg-white/10 px-5 py-4 text-base text-white placeholder:text-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-app-secondary"
+        />
+      </label>
+      <div className="flex flex-col gap-3 text-white/80">
+        <span className="text-sm font-semibold">{label}</span>
+        <div className="grid gap-4 md:grid-cols-2">
+          {["From", "To"].map((rangeBound) => (
+            <input
+              key={rangeBound}
+              type="number"
+              inputMode="numeric"
+              placeholder={rangeBound}
+              className="w-full rounded-2xl border border-white/15 bg-white/10 px-5 py-4 text-base text-white placeholder:text-white/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-app-secondary"
+            />
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <button
+          type="button"
+          className="inline-flex items-center justify-center rounded-full bg-app-button px-8 py-3 text-base font-semibold text-white transition hover:bg-app-button/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+  );
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-app-bg text-app-text px-10">
@@ -145,9 +187,9 @@ const Home = () => {
             id={`${activePlatform}-panel`}
             role="tabpanel"
             aria-labelledby={`${activePlatform}-tab`}
-            className="mt-6 min-h-[140px] rounded-2xl border border-white/10 p-6 text-left text-sm text-white/70"
+            className="mt-6 rounded-2xl border border-white/10 p-6 text-left text-sm text-white/90"
           >
-            Form layout coming next.
+            {renderSearchForm(audienceLabel)}
           </div>
         </section>
       </main>
