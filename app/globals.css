@@ -9,8 +9,9 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-app-bg: #0b103c;
-  --color-app-text: #8ca4f9;
+  --color-app-text: #FDFEFF;
   --color-app-button: #2a34ff;
+  --color-app-secondary: #8ca4f9;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
