@@ -1,0 +1,3 @@
+Hi, Act as a senior Frontend Developer, you have to create a creator searching app, its just a one page landing page. I will guide you step by step for design and the functionality of the app. You have to go through the instructions, make a plan for me and when i give you a goahead you have to implement that. Remember don't do the extra or unnecessary things until i ask you to do. 
+
+Whatever you make list down the task with lable Done. List down only when i say its okay. otherwise not.
