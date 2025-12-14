@@ -1,70 +1,15 @@
 "use client";
 import Image from "next/image";
-import {
-  useState,
-  type KeyboardEvent,
-  type ReactElement,
-  type SVGProps,
-} from "react";
+import { useState, type KeyboardEvent } from "react";
 import ResultsSection from "@/components/ResultsSection";
+import {
+  countries,
+  platformAudienceLabel,
+  platformTabs,
+  type PlatformId,
+} from "@/lib/searchConstants";
 
 const logoAltText = "MotionSearch logo";
-
-type PlatformId = "youtube" | "tiktok" | "instagram";
-
-type PlatformTab = {
-  id: PlatformId;
-  label: string;
-  Icon: (props: SVGProps<SVGSVGElement>) => ReactElement;
-};
-
-const platformAudienceLabel: Record<PlatformId, "Subscribers" | "Followers"> = {
-  youtube: "Subscribers",
-  tiktok: "Followers",
-  instagram: "Followers",
-};
-
-const YoutubeIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    aria-hidden="true"
-    focusable="false"
-    {...props}
-  >
-    <path d="M21.6 7.2a2.49 2.49 0 0 0-1.75-1.76C18.08 5 12 5 12 5s-6.08 0-7.85.44A2.5 2.5 0 0 0 2.4 7.2 26.1 26.1 0 0 0 2 12a26.1 26.1 0 0 0 .4 4.8 2.49 2.49 0 0 0 1.75 1.77C5.92 19 12 19 12 19s6.08 0 7.85-.43a2.49 2.49 0 0 0 1.75-1.77A26.1 26.1 0 0 0 22 12a26.1 26.1 0 0 0-.4-4.8ZM10 15V9l5 3Z" />
-  </svg>
-);
-
-const TiktokIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    aria-hidden="true"
-    focusable="false"
-    {...props}
-  >
-    <path d="M21 8.5a6.48 6.48 0 0 1-4.1-1.37v6.17a5.7 5.7 0 1 1-5.7-5.7 5.9 5.9 0 0 1 .86.07v2.6a3.2 3.2 0 1 0 2.24 3.06V3h2.6a3.9 3.9 0 0 0 3.9 3.9Z" />
-  </svg>
-);
-
-const InstagramIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    aria-hidden="true"
-    focusable="false"
-    {...props}
-  >
-    <path d="M16.5 3h-9A4.5 4.5 0 0 0 3 7.5v9A4.5 4.5 0 0 0 7.5 21h9a4.5 4.5 0 0 0 4.5-4.5v-9A4.5 4.5 0 0 0 16.5 3Zm3 13.5a3 3 0 0 1-3 3h-9a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3ZM12 8.25A3.75 3.75 0 1 0 15.75 12 3.75 3.75 0 0 0 12 8.25Zm0 6A2.25 2.25 0 1 1 14.25 12 2.25 2.25 0 0 1 12 14.25Zm5.5-7.88a.88.88 0 1 0 .88.88.88.88 0 0 0-.88-.88Z" />
-  </svg>
-);
-
-const platformTabs: PlatformTab[] = [
-  { id: "youtube", label: "YouTube", Icon: YoutubeIcon },
-  { id: "tiktok", label: "TikTok", Icon: TiktokIcon },
-  { id: "instagram", label: "Instagram", Icon: InstagramIcon },
-];
 
 const Home = () => {
   const [activePlatform, setActivePlatform] = useState<PlatformId>("youtube");
@@ -107,18 +52,96 @@ const Home = () => {
         />
       </label>
       <div className="flex flex-col gap-3 text-white/80">
-        <span className="text-sm font-semibold">{label}</span>
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-3">
+          <label className="flex flex-col gap-2">
+            <span className="text-sm font-semibold">Location</span>
+            <select
+              defaultValue=""
+              aria-label="Location"
+              className="w-full rounded-2xl border border-white/15 bg-white/10 px-5 py-4 text-base text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-app-secondary"
+            >
+              <option value="" disabled className="bg-app-bg text-app-text">
+                Select Country
+              </option>
+              <option value="All countries" className="bg-app-bg text-app-text">
+                All countries
+              </option>
+              {countries.map((country) => (
+                <option
+                  key={country}
+                  value={country}
+                  className="bg-app-bg text-app-text"
+                >
+                  {country}
+                </option>
+              ))}
+            </select>
+          </label>
+
           {["From", "To"].map((rangeBound) => (
-            <input
-              key={rangeBound}
-              type="number"
-              inputMode="numeric"
-              placeholder={rangeBound}
-              className="w-full appearance-none rounded-2xl border border-white/15 bg-white/10 px-5 py-4 text-base text-white placeholder:text-white/50 [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-app-secondary"
-            />
+            <div key={rangeBound} className="flex flex-col gap-2">
+              <span
+                className={`select-none text-sm font-semibold ${
+                  rangeBound === "From" ? "" : "invisible"
+                }`}
+                aria-hidden="true"
+              >
+                {label}
+              </span>
+              <input
+                type="number"
+                inputMode="numeric"
+                placeholder={rangeBound}
+                aria-label={`${label} ${rangeBound}`}
+                className="w-full appearance-none rounded-2xl border border-white/15 bg-white/10 px-5 py-4 text-base text-white placeholder:text-white/50 [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-app-secondary"
+              />
+            </div>
           ))}
         </div>
+      </div>
+
+      <div className="grid gap-4 text-white/80 md:grid-cols-3">
+        <label className="flex flex-col gap-2">
+          <span className="text-sm font-semibold">Last Post</span>
+          <select
+            defaultValue=""
+            aria-label="Last Post"
+            className="w-full rounded-2xl border border-white/15 bg-white/10 px-5 py-4 text-base text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-app-secondary"
+          >
+            <option value="" disabled className="bg-app-bg text-app-text">
+              Select last post Date
+            </option>
+            <option value="any" className="bg-app-bg text-app-text">
+              Any
+            </option>
+            <option value="last_90_days" className="bg-app-bg text-app-text">
+              Last 90 days
+            </option>
+            <option value="last_365_days" className="bg-app-bg text-app-text">
+              Last 365 Days
+            </option>
+          </select>
+        </label>
+
+        {["From %", "To %"].map((rangeBound) => (
+          <div key={rangeBound} className="flex flex-col gap-2">
+            <span
+              className={`select-none text-sm font-semibold ${
+                rangeBound === "From %" ? "" : "invisible"
+              }`}
+              aria-hidden="true"
+            >
+              Engagement Rate
+            </span>
+            <input
+              type="number"
+              inputMode="decimal"
+              placeholder={rangeBound}
+              aria-label={`Engagement Rate ${rangeBound}`}
+              className="w-full appearance-none rounded-2xl border border-white/15 bg-white/10 px-5 py-4 text-base text-white placeholder:text-white/50 [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-app-secondary"
+            />
+          </div>
+        ))}
       </div>
       <div className="flex justify-center">
         <button
