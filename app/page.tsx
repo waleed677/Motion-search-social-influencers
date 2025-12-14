@@ -68,6 +68,7 @@ const platformTabs: PlatformTab[] = [
 
 const Home = () => {
   const [activePlatform, setActivePlatform] = useState<PlatformId>("youtube");
+  const [hasSearched, setHasSearched] = useState(false);
   const audienceLabel = platformAudienceLabel[activePlatform];
 
   const handleTabSelect = (platformId: PlatformId) => {
@@ -86,6 +87,13 @@ const Home = () => {
     }
     event.preventDefault();
     handleTabSelect(platformId);
+  };
+
+  const handleSearch = () => {
+    if (hasSearched) {
+      return;
+    }
+    setHasSearched(true);
   };
 
   const renderSearchForm = (label: string) => (
@@ -107,7 +115,7 @@ const Home = () => {
               type="number"
               inputMode="numeric"
               placeholder={rangeBound}
-              className="w-full rounded-2xl border border-white/15 bg-white/10 px-5 py-4 text-base text-white placeholder:text-white/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-app-secondary"
+              className="w-full appearance-none rounded-2xl border border-white/15 bg-white/10 px-5 py-4 text-base text-white placeholder:text-white/50 [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-app-secondary"
             />
           ))}
         </div>
@@ -115,6 +123,7 @@ const Home = () => {
       <div className="flex justify-center">
         <button
           type="button"
+          onClick={handleSearch}
           className="inline-flex items-center justify-center rounded-full bg-app-button px-8 py-3 text-base font-semibold text-white transition hover:bg-app-button/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50"
         >
           Search
@@ -124,7 +133,7 @@ const Home = () => {
   );
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-app-bg text-app-text px-10">
+    <div className="flex h-screen w-full flex-col overflow-hidden bg-app-bg px-10 text-app-text">
       <header className="flex !flex w-full justify-start py-8">
         <Image
           src="/logo.png"
@@ -135,10 +144,11 @@ const Home = () => {
           className="h-12 w-auto"
         />
       </header>
-      <main className="flex w-full flex-1 flex-col items-center justify-start gap-20 px-4 pb-12">
+      <main className="flex w-full flex-1 flex-col items-center justify-start gap-20 overflow-hidden px-4 pb-12">
         <section className="flex w-full flex-col items-center text-center">
           <p className="mb-3 font-semibold leading-tight text-app-text text-6xl">
-            Find Your Ideal Creators
+            Find your <span className="text-[#1C97FF] italic">Client</span> in{" "}
+            <span className="text-[#1C97FF] italic">One Click</span>
           </p>
           <p className="text-app-text text-[1.125rem] leading-relaxed">
             <span className="block">
@@ -149,6 +159,7 @@ const Home = () => {
             </span>
           </p>
         </section>
+
         <section className="relative mx-auto mt-20 w-full max-w-4xl rounded-3xl bg-app-secondary/20 px-6 pb-6 pt-10  ">
           <div
             className="absolute left-1/2 top-0 flex -translate-x-1/2 -translate-y-full items-center rounded-2xl   px-3   "
@@ -157,10 +168,8 @@ const Home = () => {
           >
             {platformTabs.map(({ id, label, Icon }) => {
               const isActive = activePlatform === id;
-              const activeClasses =
-                "bg-app-secondary/20 text-white";
-              const inactiveClasses =
-                "text-app-text/75 hover:bg-white/10";
+              const activeClasses = "bg-app-secondary/20 text-white";
+              const inactiveClasses = "text-app-text/75 hover:bg-white/10";
 
               return (
                 <button
@@ -193,7 +202,12 @@ const Home = () => {
             {renderSearchForm(audienceLabel)}
           </div>
         </section>
-        <ResultsSection platform={activePlatform} />
+
+        {hasSearched ? (
+          <div className="w-full flex-1 overflow-y-auto">
+            <ResultsSection platform={activePlatform} />
+          </div>
+        ) : null}
       </main>
     </div>
   );
