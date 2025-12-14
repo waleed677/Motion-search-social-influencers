@@ -156,7 +156,7 @@ const Home = () => {
   );
 
   return (
-    <div className="flex h-screen w-full flex-col overflow-hidden bg-app-bg px-10 text-app-text">
+    <div className="flex min-h-screen w-full flex-col bg-app-bg px-8 text-app-text">
       <header className="flex !flex w-full justify-start py-8">
         <Image
           src="/logo.png"
@@ -167,7 +167,7 @@ const Home = () => {
           className="h-12 w-auto"
         />
       </header>
-      <main className="flex w-full flex-1 flex-col items-center justify-start gap-20 overflow-hidden px-4 pb-12">
+      <main className="flex w-full flex-1 flex-col items-center justify-start gap-20 px-4 pb-12">
         <section className="flex w-full flex-col items-center text-center">
           <p className="mb-3 font-semibold leading-tight text-app-text text-6xl">
             Find your <span className="text-[#1C97FF] italic">Client</span> in{" "}
@@ -220,7 +220,7 @@ const Home = () => {
             id={`${activePlatform}-panel`}
             role="tabpanel"
             aria-labelledby={`${activePlatform}-tab`}
-            className="mt-6 rounded-2xl border border-white/10 p-6 text-left text-sm text-white/90"
+            className="rounded-2xl border border-white/10 p-5 text-left text-sm text-white/90"
           >
             {renderSearchForm(audienceLabel)}
           </div>
