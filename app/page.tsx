@@ -167,7 +167,7 @@ const Home = () => {
           className="h-12 w-auto"
         />
       </header>
-      <main className="flex w-full flex-1 flex-col items-center justify-start gap-20 px-4 pb-12">
+      <main className="flex w-full flex-1 flex-col items-center justify-start gap-2 px-4 pb-12">
         <section className="flex w-full flex-col items-center text-center">
           <p className="mb-3 font-semibold leading-tight text-app-text text-6xl">
             Find your <span className="text-[#1C97FF] italic">Client</span> in{" "}
