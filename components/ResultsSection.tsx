@@ -1,6 +1,6 @@
 import ResultCard from "./ResultCard";
 
-type PlatformId = "youtube" | "tiktok" | "instagram";
+type PlatformId = "youtube" | "tiktok" | "instagram" | "twitter";
 
 type ResultsSectionProps = {
   platform: PlatformId;

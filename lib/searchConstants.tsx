@@ -1,6 +1,6 @@
 import type { ReactElement, SVGProps } from "react";
 
-export type PlatformId = "youtube" | "tiktok" | "instagram";
+export type PlatformId = "youtube" | "tiktok" | "instagram" | "twitter";
 
 export type PlatformTab = {
   id: PlatformId;
@@ -13,6 +13,7 @@ export const platformAudienceLabel: Record<PlatformId, "Subscribers" | "Follower
     youtube: "Subscribers",
     tiktok: "Followers",
     instagram: "Followers",
+    twitter: "Followers",
   };
 
 const YoutubeIcon = (props: SVGProps<SVGSVGElement>) => (
@@ -51,10 +52,23 @@ const InstagramIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const TwitterIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+    focusable="false"
+    {...props}
+  >
+    <path d="M18.9 2H22l-6.8 7.8L23 22h-6.4l-5-6.6L5.8 22H2.7l7.3-8.4L1 2h6.5l4.5 6L18.9 2Zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20Z" />
+  </svg>
+);
+
 export const platformTabs: PlatformTab[] = [
   { id: "youtube", label: "YouTube", Icon: YoutubeIcon },
   { id: "tiktok", label: "TikTok", Icon: TiktokIcon },
   { id: "instagram", label: "Instagram", Icon: InstagramIcon },
+  { id: "twitter", label: "Twitter", Icon: TwitterIcon },
 ];
 
 export const countries = [

@@ -1,4 +1,4 @@
-type PlatformId = "youtube" | "tiktok" | "instagram";
+type PlatformId = "youtube" | "tiktok" | "instagram" | "twitter";
 
 type ResultStats = {
   subscribers?: string;
@@ -55,6 +55,14 @@ const platformStatConfig: Record<
     { label: "Other socials", key: "otherSocials" },
   ],
   instagram: [
+    { label: "Followers", key: "followers" },
+    { label: "Posts", key: "posts" },
+    { label: "Average Likes", key: "averageLikes" },
+    { label: "Location", key: "location" },
+    { label: "Engagement Rate", key: "engagementRate" },
+    { label: "Other socials", key: "otherSocials" },
+  ],
+  twitter: [
     { label: "Followers", key: "followers" },
     { label: "Posts", key: "posts" },
     { label: "Average Likes", key: "averageLikes" },
